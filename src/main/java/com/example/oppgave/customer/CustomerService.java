@@ -19,4 +19,8 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public Customer addNewCustomer(Customer customer) {
+        return customerRepository.save(customer);
+    }
+
 }

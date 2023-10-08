@@ -21,4 +21,8 @@ public class LoanApplicationService {
         return loanApplicationRepository.findAll();
     }
 
+    public LoanApplication addNewLoanApplication(LoanApplication loanApplication) {
+        return loanApplicationRepository.save(loanApplication);
+    }
+
 }

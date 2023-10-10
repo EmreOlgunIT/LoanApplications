@@ -3,6 +3,8 @@ package com.example.oppgave.loanapplication;
 import com.example.oppgave.customer.Customer;
 import com.example.oppgave.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,12 +24,13 @@ public class LoanApplicationController {
 
     @CrossOrigin
     @GetMapping
-    public List<LoanApplication> getLoanApplications(){
-        return loanApplicationService.getLoanApplications();
+    public ResponseEntity<List<LoanApplication>>  getLoanApplications(){
+        return new ResponseEntity<>(loanApplicationService.getLoanApplications(), HttpStatus.OK) ;
     }
 
     @PostMapping
-    public void registerLoanApplication(
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<LoanApplication> registerLoanApplication(
             @RequestParam(name = "socialSecurityNumber") String socialSecurityNumber,
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "lastName") String lastName,
@@ -42,7 +45,9 @@ public class LoanApplicationController {
 
         //Save loan application info
         LoanApplication loanApplication = new LoanApplication(loanAmount, equityAmount, salaryAmount, savedCustomer.getId());
-        loanApplicationService.addNewLoanApplication(loanApplication);
+        LoanApplication savedLoanApplication = loanApplicationService.addNewLoanApplication(loanApplication);
+
+        return new ResponseEntity<>(savedLoanApplication, HttpStatus.OK);
     }
 
 }

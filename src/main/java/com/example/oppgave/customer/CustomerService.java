@@ -23,4 +23,10 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    public Customer getCustomerById(Integer id) {
+        return customerRepository.getReferenceById(id);
+    }
+
+
+
 }
